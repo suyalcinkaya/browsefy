@@ -1,36 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>koalazily - example</title>
+    <title>browsefy - example</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-      .container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-      }
-      img {
-        margin-bottom: 5rem;
-      }
-    </style>
   </head>
   <body>
-    <div class="container">
-      <img data-koalazily="https://source.unsplash.com/300x200/?house/1" width="300" height="200" alt="" />
-      <img data-koalazily="https://source.unsplash.com/300x200/?house/2" width="300" height="200" alt="" />
-      <img data-koalazily="https://source.unsplash.com/300x200/?house/3" width="300" height="200" alt="" />
-      <img data-koalazily="https://source.unsplash.com/300x200/?house/4" width="300" height="200" alt="" />
-      <img data-koalazily="https://source.unsplash.com/300x200/?house/5" width="300" height="200" alt="" />
+    <div>
+      <span id="user-agent"></span>
     </div>
-    <script src="../dist/koalazily.umd.js"></script> 
+    <script src="../dist/browsefy.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bowser@2.7.0/es5.min.js"></script>
     <script>
-      koalazily({
-        offset: 200,
-        onLoad: function(image) {
-          console.log(image.src + ' loaded.');
-        },
-        useLoader: true,
-      });
+      document.getElementById('user-agent').innerHTML = window.navigator.userAgent;
+      browsefy();
+      console.log('bowser:', bowser.getParser(window.navigator.userAgent).parsedResult);
     </script>
   </body>
 </html>

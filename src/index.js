@@ -1,49 +1,100 @@
-function koalazily({ offset = 100, threshold = 0.01, area, onLoad, useLoader = false, dataSelector = 'koalazily' } = {}) {
-  const images = Array.from(document.querySelectorAll(`[data-${dataSelector}]`));
-
-  if (!('IntersectionObserver' in window)) {
-    // If Intersection Observer API is not available, fall back with the normal loading of images.
-    images.forEach(loadImage);
-    return images;
+function browsefy({ userAgent } = {}) {
+  if (typeof window === undefined) {
+    // If it is server-side rendering, fall back with console warning.
+    return console.warn('browsefy can not work on server-side!');
   }
 
-  // See here: https://css-tricks.com/preventing-content-reflow-from-lazy-loaded-images/
-  images.forEach(image => {
-    const width = image.clientWidth || image.offsetWidth;
-    const height = image.clientHeight || image.offsetHeight;
+  window.browsefy = browsefy;
 
-    if (width && height) {
-      image.src = Boolean(useLoader)
-        ? `data:image/svg+xml,%3Csvg id='koalazily-loader' width='${width}px' height='${height}px' viewBox='0 0 ${width} ${height}' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3Cstyle type='text/css'%3E @keyframes koalazily-pulse %7B 0%25 %7Bbackground-position: 0%25 0%25; %7D 100%25 %7Bbackground-position: -135%25 0%25; %7D%0A%7D%0Asvg%23koalazily-loader %7B background: linear-gradient(-90deg, %23e0e0e0 0%25, %23f0f0f0 50%25, %23e0e0e0 100%25); background-size: 400%25 400%25; animation: koalazily-pulse 1.2s ease-in-out infinite;%0A%7D %3C/style%3E%3C/svg%3E`
-        : `data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}"%3E%3C/svg%3E`
-    }
-  });
-
-  function loadImage(image) {
-    image.src = image.dataset[dataSelector];
-    image.onload = () => {
-      if (onLoad) onLoad(image);
-      delete image.dataset[dataSelector];
-    }
-  }
-
-  function onIntersection(entries) {
-    entries.forEach(entry => {
-      if (entry.intersectionRatio > 0) {
-        observer.unobserve(entry.target);
-        loadImage(entry.target);
-      }
-    });
-  }
-
-  const options = {
-    root: area,
-    rootMargin: `${offset}px 0px`,
-    threshold: threshold
+  const result = {
+    browser: '', // Internet Explorer
+    os: '', // Windows
+    platform: '', // desktop
+    model: '', // iPhone
   };
-  const observer = new IntersectionObserver(onIntersection, options);
-  images.forEach(image => observer.observe(image));
-  return images;
+
+  const ua = userAgent || window.navigator.userAgent.toLowerCase();
+  const width = window.screen.width;
+  const height = window.screen.height;
+
+  if (ua.indexOf('macintosh') > -1) {
+    result.os = 'macOS';
+    result.platform = 'desktop';
+  } else if (ua.indexOf('windows phone') > -1) {
+    result.os = 'Windows Phone';
+    result.platform = 'mobile';
+  } else if (ua.indexOf('xbox') > -1) {
+    result.browser = 'Microsoft Edge';
+    result.os = 'Windows';
+    result.model = 'Xbox';
+    result.platform = 'console';
+    return result;
+  } else if (ua.indexOf('windows') > -1) {
+    result.os = 'Windows';
+    result.platform = 'desktop';
+  } else if (ua.indexOf('ipad') > -1) {
+    result.os = 'iOS';
+    result.model = 'iPad';
+    result.platform = 'tablet';
+  } else if (ua.indexOf('iphone') > -1) {
+    result.os = 'iOS';
+    result.model = 'iPhone';
+    result.platform = 'mobile';
+  } else if (ua.indexOf('android') > -1) {
+    result.os = 'Android';
+    result.platform = 'mobile';
+    if (ua.indexOf('mobile') > -1) {
+      result.platform = 'mobile';
+    } else if (ua.indexOf('tablet') > -1 || ua.indexOf('nexus') > -1) {
+      result.platform = 'tablet';
+    }
+  } else if (ua.indexOf('cros') > -1) {
+    result.os = 'Chrome OS';
+  } else if (ua.indexOf('blackberry') > -1 || ua.indexOf('bb') > -1) {
+    result.browser = 'BlackBerry';
+    result.os = 'BlackBerry';
+    result.platform = 'mobile';
+    return result;
+  } else if (ua.indexOf('playstation') > -1) {
+    result.browser = 'PS Web Browser';
+    result.model = 'PlayStation';
+    result.platform = 'console';
+    return result;
+  }
+
+  // TODO: Might need some fix
+  if (width > 599 && width < 1281 && height > 849 && height < 1367) {
+    result.platform = 'tablet';
+  }
+
+  if (ua.indexOf('edge') > -1) {
+    result.browser = 'Microsoft Edge';
+  } else if (ua.indexOf('ucbrowser') > -1) {
+    result.browser = 'UC Browser';
+  } else if (ua.indexOf('msie') > -1) {
+    result.browser = 'Internet Explorer';
+  } else if (ua.indexOf('fxios') > -1 || ua.indexOf('firefox') > -1) {
+    result.browser = 'Firefox';
+  } else if (ua.indexOf('opera') > -1 || ua.indexOf('opr') > -1) {
+    result.browser = 'Opera';
+  } else if (ua.indexOf('chrome') > -1 || ua.indexOf('crios') > -1) {
+    result.browser = 'Chrome';
+  } else if (result.os !== 'Android' && ua.indexOf('safari') > -1) {
+    result.browser = 'Safari';
+  } else if (ua.indexOf('instagram') > -1) {
+    result.browser = 'Instagram';
+  } else if (ua.indexOf('pinterest') > -1) {
+    result.browser = 'Pinterest';
+  } else if ((ua.indexOf('fban') > -1 || ua.indexOf('fbav') > -1) && ua.indexOf('messenger') < 0 && ua.indexOf('fb_iab') < 0) {
+    result.browser = 'Facebook';
+  } else if ((ua.indexOf('messenger') > -1 || ua.indexOf('fb_iab') > -1) && (ua.indexOf('fban') < 0 || ua.indexOf('fbav') < 0)) {
+    result.browser = 'Facebook Messenger';
+  } else if (ua.indexOf('en-us') > -1) {
+    result.browser = 'Android Browser';
+  }
+
+  console.log('result:', result);
+  return result;
 }
 
-export default koalazily;
+export default browsefy;

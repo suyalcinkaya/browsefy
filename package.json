@@ -1,24 +1,24 @@
 {
-  "name": "koalazily",
+  "name": "browsefy",
   "version": "1.0.0",
-  "description": "Modern lazy image loading using Intersection Observer API",
+  "description": "Browser detector",
   "license": "MIT",
   "repository": {
-    "url": "https://github.com/suyalcinkaya/koalazily",
+    "url": "https://github.com/suyalcinkaya/browsefy",
     "type": "git"
   },
-  "homepage": "https://github.com/suyalcinkaya/koalazily",
-  "bugs": "https://github.com/suyalcinkaya/koalazily",
+  "homepage": "https://github.com/suyalcinkaya/browsefy",
+  "bugs": "https://github.com/suyalcinkaya/browsefy",
   "source": "src/index.js",
-  "main": "dist/koalazily.js",
-  "umd:main": "dist/koalazily.umd.js",
-  "module": "dist/koalazily.m.js",
+  "main": "dist/browsefy.js",
+  "umd:main": "dist/browsefy.umd.js",
+  "module": "dist/browsefy.m.js",
   "files": [
     "dist"
   ],
   "scripts": {
     "test": "jest",
-    "build": "microbundle",
+    "build": "yarn run lint && microbundle",
     "lint": "standard --fix src"
   },
   "author": "Onur Şuyalçınkaya",
@@ -31,7 +31,6 @@
   },
   "devDependencies": {
     "babel-preset-env": "1.7.0",
-    "intersection-observer": "0.7.0",
     "jest": "25.1.0",
     "microbundle": "0.11.0",
     "standard": "14.3.1"
