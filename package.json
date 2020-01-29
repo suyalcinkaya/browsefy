@@ -1,7 +1,7 @@
 {
   "name": "browsefy",
   "version": "1.0.0",
-  "description": "Browser detector",
+  "description": "Lightweight browser detector",
   "license": "MIT",
   "repository": {
     "url": "https://github.com/suyalcinkaya/browsefy",
@@ -19,7 +19,9 @@
   "scripts": {
     "test": "jest",
     "build": "yarn run lint && microbundle",
-    "lint": "standard --fix src"
+    "dev": "microbundle watch",
+    "lint": "standard ./src/index.js",
+    "fix-lint": "standard --fix ./src/index.js"
   },
   "author": "Onur Şuyalçınkaya",
   "babel": {

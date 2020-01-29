@@ -1,5 +1,5 @@
-function browsefy({ userAgent } = {}) {
-  if (typeof window === undefined) {
+function browsefy ({ userAgent } = {}) {
+  if (typeof window === 'undefined') {
     // If it is server-side rendering, fall back with console warning.
     return console.warn('browsefy can not work on server-side!');
   }
@@ -26,8 +26,9 @@ function browsefy({ userAgent } = {}) {
   } else if (ua.indexOf('xbox') > -1) {
     result.browser = 'Microsoft Edge';
     result.os = 'Windows';
-    result.model = 'Xbox';
+    result.model = 'XBox';
     result.platform = 'console';
+    console.log('result:', result);
     return result;
   } else if (ua.indexOf('windows') > -1) {
     result.os = 'Windows';
@@ -50,31 +51,33 @@ function browsefy({ userAgent } = {}) {
     }
   } else if (ua.indexOf('cros') > -1) {
     result.os = 'Chrome OS';
-  } else if (ua.indexOf('blackberry') > -1 || ua.indexOf('bb') > -1) {
+  } else if (ua.indexOf('blackberry') > -1 || ua.indexOf('bb') > -1 || ua.indexOf('playbook') > -1) {
     result.browser = 'BlackBerry';
     result.os = 'BlackBerry';
-    result.platform = 'mobile';
+    result.platform = ua.indexOf('playbook') < 0 ? 'mobile' : 'tablet';
+    console.log('result:', result);
     return result;
   } else if (ua.indexOf('playstation') > -1) {
     result.browser = 'PS Web Browser';
     result.model = 'PlayStation';
     result.platform = 'console';
+    console.log('result:', result);
     return result;
   }
 
-  // TODO: Might need some fix
-  if (width > 599 && width < 1281 && height > 849 && height < 1367) {
-    result.platform = 'tablet';
-  }
-
-  if (ua.indexOf('edge') > -1) {
+  if (ua.indexOf('edg') > -1) {
     result.browser = 'Microsoft Edge';
   } else if (ua.indexOf('ucbrowser') > -1) {
     result.browser = 'UC Browser';
-  } else if (ua.indexOf('msie') > -1 || ua.indexOf('rv:') > -1) {
-    result.browser = 'Internet Explorer';
+  } else if (ua.indexOf('googlebot') > -1) {
+    result.browser = 'Googlebot';
+    result.platform = 'bot';
+    console.log('result:', result);
+    return result;
   } else if (ua.indexOf('fxios') > -1 || ua.indexOf('firefox') > -1) {
     result.browser = 'Firefox';
+  } else if (ua.indexOf('msie') > -1 || ua.indexOf('rv:') > -1) {
+    result.browser = 'Internet Explorer';
   } else if (ua.indexOf('opera') > -1 || ua.indexOf('opr') > -1) {
     result.browser = 'Opera';
   } else if (ua.indexOf('chrome') > -1 || ua.indexOf('crios') > -1) {
