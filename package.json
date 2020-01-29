@@ -18,7 +18,7 @@
   ],
   "scripts": {
     "test": "jest",
-    "build": "yarn run lint && microbundle",
+    "build": "microbundle",
     "dev": "microbundle watch",
     "lint": "standard ./src/index.js",
     "fix-lint": "standard --fix ./src/index.js"
