@@ -71,7 +71,7 @@ function browsefy({ userAgent } = {}) {
     result.browser = 'Microsoft Edge';
   } else if (ua.indexOf('ucbrowser') > -1) {
     result.browser = 'UC Browser';
-  } else if (ua.indexOf('msie') > -1) {
+  } else if (ua.indexOf('msie') > -1 || ua.indexOf('rv:') > -1) {
     result.browser = 'Internet Explorer';
   } else if (ua.indexOf('fxios') > -1 || ua.indexOf('firefox') > -1) {
     result.browser = 'Firefox';
