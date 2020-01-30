@@ -1,36 +1,37 @@
-function browsefy ({ userAgent } = {}) {
+function browsefy ({ userAgent = '' } = {}) {
   const result = {
     browser: '', // Internet Explorer
     os: '', // Windows
-    platform: '', // desktop
+    platform: 'mobile', // default: mobile, because mobile-first ;)
     model: '' // iPhone
   }
 
-  let ua = ''
+  const ua = userAgent.toLowerCase() || window.navigator.userAgent.toLowerCase()
 
+  /* let ua = ''
   if (userAgent) {
+    if (typeof userAgent !== 'string') return window.alert('userAgent prop must be a in string type!')
     ua = userAgent.toLowerCase()
   } else {
     if (typeof window === 'undefined') {
       // If it is server-side rendering, fall back with console warning.
-      return console.warn('browsefy can not work on server-side!')
+      return window.alert('browsefy can not work on server-side!')
     } else {
-      ua = userAgent || window.navigator.userAgent.toLowerCase()
+      ua = window.navigator.userAgent.toLowerCase()
     }
-  }
+  } */
 
   if (ua.indexOf('macintosh') > -1) {
     result.os = 'macOS'
     result.platform = 'desktop'
   } else if (ua.indexOf('windows phone') > -1) {
     result.os = 'Windows Phone'
-    result.platform = 'mobile'
   } else if (ua.indexOf('xbox') > -1) {
     result.browser = 'Microsoft Edge'
     result.os = 'Windows'
     result.model = 'XBox'
     result.platform = 'console'
-    console.log('result:', result)
+    // console.log('result:', result)
     return result
   } else if (ua.indexOf('windows') > -1) {
     result.os = 'Windows'
@@ -42,28 +43,26 @@ function browsefy ({ userAgent } = {}) {
   } else if (ua.indexOf('iphone') > -1) {
     result.os = 'iOS'
     result.model = 'iPhone'
-    result.platform = 'mobile'
   } else if (ua.indexOf('android') > -1) {
     result.os = 'Android'
-    result.platform = 'mobile'
     if (ua.indexOf('mobile') > -1) {
-      result.platform = 'mobile'
     } else if (ua.indexOf('tablet') > -1 || ua.indexOf('nexus') > -1) {
       result.platform = 'tablet'
     }
   } else if (ua.indexOf('cros') > -1) {
     result.os = 'Chrome OS'
+    result.platform = 'desktop'
   } else if (ua.indexOf('blackberry') > -1 || ua.indexOf('bb') > -1 || ua.indexOf('playbook') > -1) {
     result.browser = 'BlackBerry'
     result.os = 'BlackBerry'
     result.platform = ua.indexOf('playbook') < 0 ? 'mobile' : 'tablet'
-    console.log('result:', result)
+    // console.log('result:', result)
     return result
   } else if (ua.indexOf('playstation') > -1) {
     result.browser = 'PS Web Browser'
     result.model = 'PlayStation'
     result.platform = 'console'
-    console.log('result:', result)
+    // console.log('result:', result)
     return result
   }
 
@@ -74,7 +73,7 @@ function browsefy ({ userAgent } = {}) {
   } else if (ua.indexOf('googlebot') > -1) {
     result.browser = 'Googlebot'
     result.platform = 'bot'
-    console.log('result:', result)
+    // console.log('result:', result)
     return result
   } else if (ua.indexOf('fxios') > -1 || ua.indexOf('firefox') > -1) {
     result.browser = 'Firefox'
@@ -98,7 +97,7 @@ function browsefy ({ userAgent } = {}) {
     result.browser = 'Android Browser'
   }
 
-  console.log('result:', result)
+  // console.log('result:', result)
   return result
 }
 

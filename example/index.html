@@ -8,12 +8,21 @@
     <div>
       <div id="user-agent"></div>
       <div id="browsefy" style="margin-top: 1rem;"></div>
+      <div id="browser"></div>
+      <div id="os"></div>
+      <div id="platform"></div>
+      <div id="model"></div>
     </div>
     </div>
     <script src="../dist/browsefy.umd.js"></script>
     <script>
-      document.getElementById('user-agent').innerHTML = window.navigator.userAgent;
-      document.getElementById('browsefy').innerHTML = JSON.stringify(browsefy());
+      const result = browsefy();
+      document.getElementById('user-agent').innerHTML = 'window.navigator.userAgent: ' + window.navigator.userAgent;
+      document.getElementById('browsefy').innerHTML = 'browsefy result: ' + JSON.stringify(result);
+      document.getElementById('browser').innerHTML = 'browser: ' + JSON.stringify(result.browser);
+      document.getElementById('os').innerHTML = 'os: ' +  JSON.stringify(result.os);
+      document.getElementById('platform').innerHTML = 'platform: ' + JSON.stringify(result.platform);
+      document.getElementById('model').innerHTML = 'model: ' + JSON.stringify(result.model);
     </script>
   </body>
 </html>

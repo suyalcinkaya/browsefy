@@ -19,7 +19,7 @@
   "scripts": {
     "test": "jest",
     "build": "microbundle",
-    "dev": "microbundle watch",
+    "watch": "microbundle watch",
     "lint": "standard ./src/index.js",
     "fix-lint": "standard --fix ./src/index.js"
   },
