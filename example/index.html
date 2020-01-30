@@ -6,14 +6,14 @@
   </head>
   <body>
     <div>
-      <span id="user-agent"></span>
+      <div id="user-agent"></div>
+      <div id="browsefy" style="margin-top: 1rem;"></div>
+    </div>
     </div>
     <script src="../dist/browsefy.umd.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bowser@2.7.0/es5.min.js"></script>
     <script>
       document.getElementById('user-agent').innerHTML = window.navigator.userAgent;
-      browsefy();
-      console.log('bowser:', bowser.getParser(window.navigator.userAgent).parsedResult);
+      document.getElementById('browsefy').innerHTML = JSON.stringify(browsefy());
     </script>
   </body>
 </html>

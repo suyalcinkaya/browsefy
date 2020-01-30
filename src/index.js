@@ -1,9 +1,4 @@
 function browsefy ({ userAgent } = {}) {
-  if (typeof window === 'undefined') {
-    // If it is server-side rendering, fall back with console warning.
-    return console.warn('browsefy can not work on server-side!')
-  }
-
   const result = {
     browser: '', // Internet Explorer
     os: '', // Windows
@@ -11,7 +6,18 @@ function browsefy ({ userAgent } = {}) {
     model: '' // iPhone
   }
 
-  const ua = userAgent || window.navigator.userAgent.toLowerCase()
+  let ua = ''
+
+  if (userAgent) {
+    ua = userAgent.toLowerCase()
+  } else {
+    if (typeof window === 'undefined') {
+      // If it is server-side rendering, fall back with console warning.
+      return console.warn('browsefy can not work on server-side!')
+    } else {
+      ua = userAgent || window.navigator.userAgent.toLowerCase()
+    }
+  }
 
   if (ua.indexOf('macintosh') > -1) {
     result.os = 'macOS'
