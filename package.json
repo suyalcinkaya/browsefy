@@ -34,7 +34,7 @@
   "devDependencies": {
     "babel-preset-env": "1.7.0",
     "jest": "25.5.4",
-    "microbundle": "0.11.0",
+    "microbundle": "0.15.1",
     "standard": "16.0.3"
   }
 }
